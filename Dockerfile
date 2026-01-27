@@ -11,7 +11,7 @@ COPY internal/  ./internal/
 COPY gen/  ./gen/
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
-  go build -o ./cmd/main/main.go
+  go build -o app ./cmd/main/main.go
 
 # runtime stage
 FROM gcr.io/distroless/base-debian12
