@@ -1,4 +1,4 @@
-package handler
+package rest
 
 import (
 	"github.com/gin-gonic/gin"
@@ -12,7 +12,7 @@ type Handler struct {
 	publicHost string
 }
 
-func New(uc usecase.Usecase, ph string) *Handler {
+func NewHandler(uc usecase.Usecase, ph string) *Handler {
 	return &Handler{
 		usecase:    uc,
 		publicHost: ph,
@@ -51,11 +51,11 @@ func (h *Handler) Create(c *gin.Context) {
 		return
 	}
 
-	link, err := h.usecase.Create(ctx, fu)
+	sc, err := h.usecase.Create(ctx, fu)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "cannot create link"})
 		return
 	}
 
-	c.JSON(http.StatusOK, toCreateResponse(link, h.publicHost))
+	c.JSON(http.StatusOK, toCreateResponse(sc, h.publicHost))
 }

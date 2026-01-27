@@ -40,5 +40,5 @@ func TestUsecase_Create(t *testing.T) {
 	result, err := uc.Create(context.Background(), domain.FullURL("https://example.com"))
 	require.NoError(t, err)
 	require.NotNil(t, result)
-	repo.AssertCalled(t, "Save", mock.Anything, link)
+	repo.AssertCalled(t, "Save", mock.Anything, link.ShortCode())
 }

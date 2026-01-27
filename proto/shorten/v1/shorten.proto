@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package shorten.v1;
+
+option go_package = "shorten/internal/grpc/pb;pb";
+
+service ShortenService {
+  rpc Create(CreateRequest) returns (CreateResponse);
+  rpc GetByCode(GetByCodeRequest) returns (GetByCodeResponse);
+}
+
+message CreateRequest {
+  string full_url = 1;
+}
+
+message CreateResponse {
+  string short_url = 1;
+}
+
+message GetByCodeRequest {
+  string short_code = 1;
+}
+
+message GetByCodeResponse {
+  string full_url = 1;
+}

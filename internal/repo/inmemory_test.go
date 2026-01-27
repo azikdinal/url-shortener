@@ -11,10 +11,12 @@ import (
 func TestMemoryRepo_SaveAndGet(t *testing.T) {
 	r := NewMemoryRepo()
 
-	link := domain.NewLink(domain.ShortCode("sdfmv_dsfd"), domain.FullURL("https://example.com"))
+	sc := domain.ShortCode("sdfmv_dsfd")
+	fu := domain.FullURL("https://example.com")
+	link := domain.NewLink(sc, fu)
 	require.NoError(t, r.Save(context.Background(), link))
 
-	got, err := r.GetByCode(context.Background(), link.ShortCode())
+	got, err := r.GetByCode(context.Background(), sc)
 	require.NoError(t, err)
-	require.Equal(t, link, got)
+	require.Equal(t, fu, got)
 }

@@ -8,7 +8,7 @@ import (
 
 type Usecase interface {
 	GetByCode(ctx context.Context, sc domain.ShortCode) (domain.FullURL, error)
-	Create(ctx context.Context, fu domain.FullURL) (*domain.Link, error)
+	Create(ctx context.Context, fu domain.FullURL) (domain.ShortCode, error)
 }
 
 type usecase struct {
@@ -37,14 +37,14 @@ func (uc *usecase) GetByCode(
 func (uc *usecase) Create(
 	ctx context.Context,
 	fu domain.FullURL,
-) (*domain.Link, error) {
+) (domain.ShortCode, error) {
 
 	link := domain.NewLinkWithGeneratedCode(fu)
 
 	err := uc.repo.Save(ctx, link)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
-	return link, nil
+	return link.ShortCode(), nil
 }

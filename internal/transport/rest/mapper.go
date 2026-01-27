@@ -1,13 +1,12 @@
-package handler
+package rest
 
 import (
 	"shorten/internal/domain"
 )
 
-func toCreateResponse(link *domain.Link, host string) linkResponse {
+func toCreateResponse(sc domain.ShortCode, host string) linkResponse {
 	return linkResponse{
-		FullURL:   string(link.FullURL()),
-		ShortCode: host + string(link.ShortCode()),
+		ShortCode: host + string(sc),
 	}
 }
 

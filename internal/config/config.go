@@ -5,15 +5,17 @@ import (
 	"github.com/kelseyhightower/envconfig"
 )
 
-type config struct {
-	HTTP      HTTPConfig
-	Postgres  PostgresConfig
-	StoreType StoreType `envconfig:"STORE_TYPE" default:"IN_MEMORY"`
+type Config struct {
+	HTTP       HTTPConfig
+	GRPC       GRPCConfig
+	Postgres   PostgresConfig
+	StoreType  StoreType `envconfig:"STORE_TYPE"  default:"IN_MEMORY"`
+	PublicHost string    `envconfig:"PUBLIC_HOST" default:"http://localhost:8000/"`
 }
 
-func Load() (*config, error) {
+func Load() (*Config, error) {
 	_ = godotenv.Load()
-	var cfg config
+	var cfg Config
 
 	err := envconfig.Process("", &cfg)
 	if err != nil {

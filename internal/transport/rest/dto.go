@@ -1,8 +1,7 @@
-package handler
+package rest
 
 type linkResponse struct {
 	ShortCode string `json:"short_code"`
-	FullURL   string `json:"full_url"`
 }
 
 type createRequest struct {

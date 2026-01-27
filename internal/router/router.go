@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"shorten/internal/handler"
+	"shorten/internal/transport/rest"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,7 +14,7 @@ type Router struct {
 	server *http.Server
 }
 
-func New(h *handler.Handler) *Router {
+func New(h *rest.Handler) *Router {
 	r := gin.Default()
 
 	r.POST("/links", h.Create)
