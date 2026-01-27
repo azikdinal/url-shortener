@@ -17,7 +17,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
 FROM gcr.io/distroless/base-debian12
 
 WORKDIR /app
-COPY --from=builder /app /app
+COPY --from=builder /app/app /app/app
 
 EXPOSE 8000 8001
 USER nonroot:nonroot
