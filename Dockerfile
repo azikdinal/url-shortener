@@ -8,6 +8,7 @@ RUN go mod download
 
 COPY cmd/  ./cmd/
 COPY internal/  ./internal/
+COPY gen/  ./gen/
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
   go build -o ./cmd/main/main.go
@@ -16,7 +17,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
 FROM gcr.io/distroless/base-debian12
 
 WORKDIR /app
-COPY --from=builder /app/app /app/app
+COPY --from=builder /app /app
 
 EXPOSE 8000 8001
 USER nonroot:nonroot
