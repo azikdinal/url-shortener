@@ -1,70 +1,56 @@
 package app
 
 import (
-	"context"
-	"database/sql"
-	"log"
 	"net"
 
+	"shorten/internal/app/storage"
+	"shorten/internal/app/transport"
 	"shorten/internal/config"
-	"shorten/internal/router"
-	"shorten/internal/usecase"
 
+	"shorten/internal/router"
+	linkUseCase "shorten/internal/usecase/link"
+
+	"github.com/jackc/pgx/v4/pgxpool"
 	"google.golang.org/grpc"
 )
 
 type App struct {
-	httpRouter *router.Router
-	grpcServer *grpc.Server
-	grpcLis    net.Listener
-	db         *sql.DB
-	addr       string
+	httpServer   *router.Router
+	grpcServer   *grpc.Server
+	grpcListener net.Listener
+	dbPoolCfg    *pgxpool.Config // используется в Run()
+	dbPool       *pgxpool.Pool
+	httpAddr     string
 }
 
+// New() реализует загрузку конфигов компонентов приложения
 func New() (*App, error) {
+	// Загружаются конфиги из .env
 	cfg, err := config.Load()
 	if err != nil {
 		return nil, err
 	}
 
-	repo, db, err := BuildRepo(cfg)
+	// Определяется тип хранилища и его конфигурация
+	// dbCfg == nil, если выбран inmemory
+	linkStorage, dbPoolCfg, emptyDBPool, err := storage.BuildStorage(cfg)
 	if err != nil {
 		return nil, err
 	}
 
-	uc := usecase.New(repo)
-	httpRouter := BuildHTTP(uc, cfg)
-	grpcServer, grpcLis, err := BuildGRPC(uc, cfg)
-	if err != nil {
-		return nil, err
-	}
+	linkUC := linkUseCase.New(linkStorage)
+	// Определяется конфигурация HTTP-сервера
+	httpServer := transport.BuildHTTPServer(linkUC, cfg)
+
+	// Определяется конфигурация GRPC-сервера
+	grpcServer, grpcListener, err := transport.BuildGRPCServer(linkUC, cfg)
 
 	return &App{
-		httpRouter: httpRouter,
-		grpcServer: grpcServer,
-		grpcLis:    grpcLis,
-		db:         db,
-		addr:       cfg.HTTP.Address,
+		httpServer:   httpServer,
+		grpcServer:   grpcServer,
+		grpcListener: grpcListener,
+		dbPoolCfg:    dbPoolCfg,
+		dbPool:       emptyDBPool,
+		httpAddr:     cfg.HTTP.Address,
 	}, nil
-}
-
-func (app *App) Run() error {
-	go func() {
-		if err := app.grpcServer.Serve(app.grpcLis); err != nil {
-			log.Println(err)
-		}
-	}()
-	return app.httpRouter.Run(app.addr)
-}
-
-func (app *App) Shutdown(ctx context.Context) {
-	_ = app.httpRouter.Shutdown(ctx)
-
-	if app.grpcServer != nil {
-		app.grpcServer.GracefulStop()
-	}
-
-	if app.db != nil {
-		_ = app.db.Close()
-	}
 }

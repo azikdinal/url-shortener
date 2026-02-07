@@ -24,7 +24,7 @@ func main() {
 	defer stop()
 
 	go func() {
-		if err := app.Run(); err != nil {
+		if err := app.Run(ctx); err != nil {
 			log.Println(err)
 		}
 	}()

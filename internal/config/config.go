@@ -7,7 +7,7 @@ import (
 
 type Config struct {
 	HTTP       HTTPConfig
-	GRPC       GRPCConfig
+	GRPC_URL   string `envconfig:"GRPC_URL" default:"localhost:8001"`
 	Postgres   PostgresConfig
 	StoreType  StoreType `envconfig:"STORE_TYPE"  default:"IN_MEMORY"`
 	PublicHost string    `envconfig:"PUBLIC_HOST" default:"http://localhost:8000/"`
