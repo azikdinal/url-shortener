@@ -2,7 +2,6 @@ package link
 
 import (
 	"context"
-	domain "shorten/internal/domain/link"
 )
 
 func (uc *LinkUseCase) Create(
@@ -10,15 +9,23 @@ func (uc *LinkUseCase) Create(
 	fullURL string,
 ) (string, error) {
 
-	link, err := domain.NewLink(fullURL)
+	// Сохраняем запись для получения id
+	id, err := uc.linkStorage.Save(ctx, fullURL)
 	if err != nil {
 		return "", err
 	}
 
-	err = uc.linkStorage.Save(ctx, link.ShortCode, link.FullURL)
+	// Генерируем shortCode по ID
+	shortCode, err := uc.scGen.Generate(id)
 	if err != nil {
 		return "", err
 	}
 
-	return link.ShortCode, nil
+	// Добавляем shortCode к записи
+	err = uc.linkStorage.Update(ctx, id, shortCode)
+	if err != nil {
+		return "", err
+	}
+
+	return shortCode, nil
 }

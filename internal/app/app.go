@@ -7,6 +7,7 @@ import (
 	"shorten/internal/app/transport"
 	"shorten/internal/config"
 
+	domain "shorten/internal/domain/link"
 	"shorten/internal/router"
 	linkUseCase "shorten/internal/usecase/link"
 
@@ -38,7 +39,8 @@ func New() (*App, error) {
 		return nil, err
 	}
 
-	linkUC := linkUseCase.New(linkStorage)
+	scGen := domain.NewShortCodeGenerator(cfg.ShortCodeSeed)
+	linkUC := linkUseCase.New(linkStorage, scGen)
 	// Определяется конфигурация HTTP-сервера
 	httpServer := transport.BuildHTTPServer(linkUC, cfg)
 

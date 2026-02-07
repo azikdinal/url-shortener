@@ -5,15 +5,15 @@ import (
 	"errors"
 )
 
-func (r *InMemoryStorage) GetFullURL(
+func (s *InMemoryStorage) GetFullURL(
 	ctx context.Context,
 	shortCode string,
 ) (string, error) {
 
-	r.mu.RLock()
-	defer r.mu.RUnlock()
+	s.mu.RLock()
+	defer s.mu.RUnlock()
 
-	fullURL, ok := r.data[shortCode]
+	fullURL, ok := s.data[shortCode]
 	if !ok {
 		return "", errors.New("link not found in memory")
 	}

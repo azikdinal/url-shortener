@@ -4,12 +4,12 @@ import (
 	"context"
 )
 
-func (r *InMemoryStorage) Save(ctx context.Context, shortCode string, fullURL string) error {
-	r.mu.Lock()
-	defer r.mu.Unlock()
+func (s *InMemoryStorage) Save(ctx context.Context, shortCode string, fullURL string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 
 	key := shortCode
-	r.data[key] = fullURL
+	s.data[key] = fullURL
 
 	return nil
 }

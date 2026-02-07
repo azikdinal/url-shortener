@@ -1,11 +1,5 @@
 package link
 
-import (
-	"errors"
-	"hash/fnv"
-	"strings"
-)
-
 // Для хеширования ссылок используется LinkID и seed
 
 const (
@@ -14,9 +8,7 @@ const (
 	length   = 10
 )
 
-var seedInt = seedToInt64("sdfjsdsni")
-
-func encodeFullURL(id int64) string {
+func encodeIDWithSeed(id int64, seedInt int64) string {
 	value := id ^ seedInt
 
 	buf := make([]byte, length)
@@ -26,10 +18,4 @@ func encodeFullURL(id int64) string {
 	}
 
 	return string(buf)
-}
-
-func seedToInt64(seed string) int64 {
-	h := fnv.New64a()
-	_, _ = h.Write([]byte(seed))
-	return int64(h.Sum64())
 }
