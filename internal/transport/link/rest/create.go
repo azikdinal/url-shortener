@@ -8,11 +8,11 @@ import (
 type createRequest struct {
 	FullURL string `json:"full_url" binding:"required,url"`
 }
-
 type createResponse struct {
 	ShortURL string `json:"short_url"`
 }
 
+// Обработчик POST запроса
 func (h *LinkHandler) Create(c *gin.Context) {
 	ctx := c.Request.Context()
 

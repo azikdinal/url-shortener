@@ -5,18 +5,23 @@ import (
 	"errors"
 )
 
-func (s *InMemoryStorage) GetFullURL(
+func (s *InmemoryStorage) GetFullURL(
 	ctx context.Context,
-	shortCode string,
+	id int64,
 ) (string, error) {
 
-	s.mu.RLock()
-	defer s.mu.RUnlock()
-
-	fullURL, ok := s.data[shortCode]
+	value, ok := s.data.Load(id)
 	if !ok {
-		return "", errors.New("link not found in memory")
+		return "", errNotFound
+	}
+
+	fullURL, ok := value.(string)
+	if !ok {
+		return "", errNotFound
 	}
 
 	return fullURL, nil
 }
+
+var errNotFound = errors.New("fullURL not found in Memory")
+var errIncorrectValue = errors.New("incorrect fullURL value found in memory")

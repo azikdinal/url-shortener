@@ -1,14 +1,14 @@
 package app
 
 import (
-	"net"
+	"context"
+	"log"
+	"net/http"
+	"net/url"
 
-	"shorten/internal/app/storage"
-	"shorten/internal/app/transport"
 	"shorten/internal/config"
-
-	domain "shorten/internal/domain/link"
 	"shorten/internal/router"
+	linkHandler "shorten/internal/transport/link/rest"
 	linkUseCase "shorten/internal/usecase/link"
 
 	"github.com/jackc/pgx/v4/pgxpool"
@@ -16,43 +16,62 @@ import (
 )
 
 type App struct {
-	httpServer   *router.Router
-	grpcServer   *grpc.Server
-	grpcListener net.Listener
-	dbPoolCfg    *pgxpool.Config // используется в Run()
-	dbPool       *pgxpool.Pool
-	httpAddr     string
+	httpServer *http.Server
+	grpcServer *grpc.Server
+	dbPool     *pgxpool.Pool
 }
 
-// New() реализует загрузку конфигов компонентов приложения
-func New() (*App, error) {
-	// Загружаются конфиги из .env
+// Функция для создания и запуска приложения
+func CreateAndRun(ctx context.Context) (*App, error) {
+	// 1. Загружаются конфиги из .env
 	cfg, err := config.Load()
 	if err != nil {
 		return nil, err
 	}
 
-	// Определяется тип хранилища и его конфигурация
-	// dbCfg == nil, если выбран inmemory
-	linkStorage, dbPoolCfg, emptyDBPool, err := storage.BuildStorage(cfg)
+	// 2. Настройка хранилища
+	linkStorage, dbPool, err := setupStorage(ctx, cfg)
 	if err != nil {
 		return nil, err
 	}
 
-	scGen := domain.NewShortCodeGenerator(cfg.ShortCodeSeed)
-	linkUC := linkUseCase.New(linkStorage, scGen)
-	// Определяется конфигурация HTTP-сервера
-	httpServer := transport.BuildHTTPServer(linkUC, cfg)
+	// 3. Создание Usecase (бизнес-логика)
+	pubHost, _ := url.Parse(cfg.PublicHost)
+	linkUC := linkUseCase.New(linkStorage, pubHost)
 
-	// Определяется конфигурация GRPC-сервера
-	grpcServer, grpcListener, err := transport.BuildGRPCServer(linkUC, cfg)
+	// 4. Создание handler'а
+	linkHandler := linkHandler.New(linkUC, cfg.PublicHost)
+
+	// 5. Конфигурирование HTTP-сервера
+	routerEngine := router.NewEngine(linkHandler)
+
+	// 6. Определяется конфигурация GRPC-сервера
+	grpcServer, grpcListener, err := buildGRPCServer(linkUC, cfg)
+
+	// 7. Запуск HTTP-сервера
+	httpServer := &http.Server{
+		Addr:    cfg.HTTP.Address,
+		Handler: routerEngine,
+	}
+	go func() {
+		if err := httpServer.ListenAndServe(); err != nil &&
+			err != http.ErrServerClosed {
+			log.Printf("http server error: %v", err)
+		}
+	}()
+
+	// 8. Запуск GRPC-сервиса
+	go func() {
+		if err := grpcServer.Serve(grpcListener); err != nil {
+			log.Println(err)
+		}
+	}()
+
+	<-ctx.Done()
 
 	return &App{
-		httpServer:   httpServer,
-		grpcServer:   grpcServer,
-		grpcListener: grpcListener,
-		dbPoolCfg:    dbPoolCfg,
-		dbPool:       emptyDBPool,
-		httpAddr:     cfg.HTTP.Address,
+		httpServer: httpServer,
+		grpcServer: grpcServer,
+		dbPool:     dbPool,
 	}, nil
 }

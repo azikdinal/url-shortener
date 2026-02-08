@@ -5,7 +5,7 @@ import (
 )
 
 type LinkUseCase interface {
-	GetFullURL(ctx context.Context, shortURL string) (string, error)
+	GetFullURL(ctx context.Context, shortCode string) (string, error)
 	Create(ctx context.Context, fullURL string) (string, error)
 }
 

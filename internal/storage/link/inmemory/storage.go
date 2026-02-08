@@ -4,14 +4,14 @@ import (
 	"sync"
 )
 
-type InMemoryStorage struct {
-	mu   sync.RWMutex
-	data map[string]string
+type InmemoryStorage struct {
+	data   sync.Map // id -> fullURL
+	nextID int64
 }
 
-func New() *InMemoryStorage {
-	return &InMemoryStorage{
-		mu:   sync.RWMutex{},
-		data: map[string]string{},
+func New() *InmemoryStorage {
+	return &InmemoryStorage{
+		data:   sync.Map{},
+		nextID: 1,
 	}
 }

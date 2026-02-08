@@ -11,23 +11,17 @@ import (
 )
 
 func main() {
-	app, err := app.New()
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	ctx, stop := signal.NotifyContext(
 		context.Background(),
 		os.Interrupt,
-		syscall.SIGTERM,
+		syscall.SIGINT,
 	)
 	defer stop()
 
-	go func() {
-		if err := app.Run(ctx); err != nil {
-			log.Println(err)
-		}
-	}()
+	application, err := app.CreateAndRun(ctx)
+	if err != nil {
+		log.Fatalf("failed to init app: %v", err)
+	}
 
 	<-ctx.Done()
 
@@ -37,5 +31,5 @@ func main() {
 	)
 	defer cancel()
 
-	app.Shutdown(shutdownCtx)
+	application.Shutdown(shutdownCtx)
 }

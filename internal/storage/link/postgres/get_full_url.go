@@ -9,18 +9,18 @@ import (
 
 func (r *PostgresStorage) GetFullURL(
 	ctx context.Context,
-	shortCode string,
+	id int64,
 ) (string, error) {
 
 	const q = `
 	  SELECT full_url
-		FROM links
-		WHERE short_code = $1
+		FROM public.links
+		WHERE id = $1
 	`
 
 	var fullURL string
 
-	err := r.dbPool.QueryRow(ctx, q, shortCode).Scan(&fullURL)
+	err := r.dbPool.QueryRow(ctx, q, id).Scan(&fullURL)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return "", errNotFound
@@ -28,7 +28,7 @@ func (r *PostgresStorage) GetFullURL(
 		return "", err
 	}
 
-	return shortCode, nil
+	return fullURL, nil
 }
 
 var errNotFound = errors.New("The requested shortCode not found in database")
