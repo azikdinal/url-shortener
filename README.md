@@ -1,7 +1,13 @@
 ## Запуск
-Приложение запускается с помощью docker-compose:
+### 1. Скопируйте .env
 ```sh
-docker compose up -d
+cp .env.example .env
+```
+
+### 2. Запустите приложение с помощью docker-compose:
+При запуске нужно определить тип хранилища "POSTGRES" или IN_MEMORY
+```sh
+STORE_TYPE="POSTGRES" docker compose up -d
 ```
 
 ## Пример использования REST API сервера
