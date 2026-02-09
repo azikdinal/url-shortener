@@ -11,7 +11,7 @@ cp .env.example .env
 ```
 
 ### 3. Запустите приложение с помощью docker-compose:
-При запуске нужно определить тип хранилища "POSTGRES" или IN_MEMORY
+При запуске нужно определить тип хранилища "POSTGRES" или "IN_MEMORY"
 ```sh
 STORE_TYPE="POSTGRES" docker compose up -d
 ```
