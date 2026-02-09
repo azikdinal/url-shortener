@@ -13,7 +13,7 @@ type getRequest struct {
 }
 
 // Обработчик GET запроса
-func (h *LinkHandler) GetFullURL(c *gin.Context) {
+func (h *LinkHandler) Get(c *gin.Context) {
 	ctx := c.Request.Context()
 
 	var req getRequest

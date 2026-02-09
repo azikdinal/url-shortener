@@ -10,7 +10,7 @@ func NewEngine(h *linkHandler.LinkHandler) *gin.Engine {
 	r := gin.Default()
 
 	r.POST("/links", h.Create)
-	r.GET("/links", h.GetFullURL)
+	r.GET("/links", h.Get)
 
 	return r
 }

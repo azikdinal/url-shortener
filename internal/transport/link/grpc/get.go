@@ -1,4 +1,4 @@
-package link
+package grpc
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 	pb "shorten/gen/shorten/v1"
 )
 
-func (h *LinkHandler) GetByCode(
+func (h *LinkHandler) Get(
 	ctx context.Context,
 	req *pb.GetByCodeRequest,
 ) (*pb.GetByCodeResponse, error) {
