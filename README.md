@@ -1,10 +1,16 @@
 ## Запуск
-### 1. Скопируйте .env
+### 1. Клонируйте репозиторий
+```sh
+git clone https://github.com/azikdinal/url-shortener.git
+cd url-shortener
+```
+
+### 2. Скопируйте .env
 ```sh
 cp .env.example .env
 ```
 
-### 2. Запустите приложение с помощью docker-compose:
+### 3. Запустите приложение с помощью docker-compose:
 При запуске нужно определить тип хранилища "POSTGRES" или IN_MEMORY
 ```sh
 STORE_TYPE="POSTGRES" docker compose up -d
