@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package shorten.v1;
 
-option go_package = "shorten/internal/grpc/pb;pb";
+option go_package = "shorten/gen/grpc/v1/pb;pb";
 
 service ShortenService {
   rpc Create(CreateRequest) returns (CreateResponse);
-  rpc GetByCode(GetByCodeRequest) returns (GetByCodeResponse);
+  rpc Get(GetRequest) returns (GetResponse);
 }
 
 message CreateRequest {
@@ -17,10 +17,10 @@ message CreateResponse {
   string short_url = 1;
 }
 
-message GetByCodeRequest {
-  string short_code = 1;
+message GetRequest {
+  string short_url = 1;
 }
 
-message GetByCodeResponse {
+message GetResponse {
   string full_url = 1;
 }

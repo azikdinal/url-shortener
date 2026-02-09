@@ -6,7 +6,7 @@ import (
 	"context"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	pb "shorten/gen/shorten/v1"
+	pb "shorten/gen/grpc/v1"
 )
 
 func (h *LinkHandler) Create(

@@ -2,7 +2,7 @@ package grpc
 
 import (
 	"context"
-	pb "shorten/gen/shorten/v1"
+	pb "shorten/gen/grpc/v1"
 	"shorten/internal/transport/link/mocks"
 	"testing"
 
@@ -23,8 +23,8 @@ func TestLinkHandler_Get_Success(t *testing.T) {
 		linkUseCase: useCase,
 	}
 
-	req := &pb.GetByCodeRequest{
-		ShortCode: "abc123",
+	req := &pb.GetRequest{
+		ShortUrl: "abc123",
 	}
 
 	resp, err := handler.Get(ctx, req)

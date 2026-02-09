@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.0
 // - protoc             v6.33.1
-// source: shorten/v1/shorten.proto
+// source: grpc/v1/shorten.proto
 
 package pb
 
@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ShortenService_Create_FullMethodName    = "/shorten.v1.ShortenService/Create"
-	ShortenService_GetByCode_FullMethodName = "/shorten.v1.ShortenService/GetByCode"
+	ShortenService_Create_FullMethodName = "/shorten.v1.ShortenService/Create"
+	ShortenService_Get_FullMethodName    = "/shorten.v1.ShortenService/Get"
 )
 
 // ShortenServiceClient is the client API for ShortenService service.
@@ -28,7 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ShortenServiceClient interface {
 	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
-	GetByCode(ctx context.Context, in *GetByCodeRequest, opts ...grpc.CallOption) (*GetByCodeResponse, error)
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
 }
 
 type shortenServiceClient struct {
@@ -49,10 +49,10 @@ func (c *shortenServiceClient) Create(ctx context.Context, in *CreateRequest, op
 	return out, nil
 }
 
-func (c *shortenServiceClient) GetByCode(ctx context.Context, in *GetByCodeRequest, opts ...grpc.CallOption) (*GetByCodeResponse, error) {
+func (c *shortenServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetByCodeResponse)
-	err := c.cc.Invoke(ctx, ShortenService_GetByCode_FullMethodName, in, out, cOpts...)
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, ShortenService_Get_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (c *shortenServiceClient) GetByCode(ctx context.Context, in *GetByCodeReque
 // for forward compatibility.
 type ShortenServiceServer interface {
 	Create(context.Context, *CreateRequest) (*CreateResponse, error)
-	GetByCode(context.Context, *GetByCodeRequest) (*GetByCodeResponse, error)
+	Get(context.Context, *GetRequest) (*GetResponse, error)
 	mustEmbedUnimplementedShortenServiceServer()
 }
 
@@ -78,8 +78,8 @@ type UnimplementedShortenServiceServer struct{}
 func (UnimplementedShortenServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedShortenServiceServer) GetByCode(context.Context, *GetByCodeRequest) (*GetByCodeResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetByCode not implemented")
+func (UnimplementedShortenServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
 }
 func (UnimplementedShortenServiceServer) mustEmbedUnimplementedShortenServiceServer() {}
 func (UnimplementedShortenServiceServer) testEmbeddedByValue()                        {}
@@ -120,20 +120,20 @@ func _ShortenService_Create_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ShortenService_GetByCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetByCodeRequest)
+func _ShortenService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ShortenServiceServer).GetByCode(ctx, in)
+		return srv.(ShortenServiceServer).Get(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ShortenService_GetByCode_FullMethodName,
+		FullMethod: ShortenService_Get_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ShortenServiceServer).GetByCode(ctx, req.(*GetByCodeRequest))
+		return srv.(ShortenServiceServer).Get(ctx, req.(*GetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -150,10 +150,10 @@ var ShortenService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ShortenService_Create_Handler,
 		},
 		{
-			MethodName: "GetByCode",
-			Handler:    _ShortenService_GetByCode_Handler,
+			MethodName: "Get",
+			Handler:    _ShortenService_Get_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "shorten/v1/shorten.proto",
+	Metadata: "grpc/v1/shorten.proto",
 }

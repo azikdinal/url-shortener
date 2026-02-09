@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.11
 // 	protoc        v6.33.1
-// source: shorten/v1/shorten.proto
+// source: grpc/v1/shorten.proto
 
 package pb
 
@@ -30,7 +30,7 @@ type CreateRequest struct {
 
 func (x *CreateRequest) Reset() {
 	*x = CreateRequest{}
-	mi := &file_shorten_v1_shorten_proto_msgTypes[0]
+	mi := &file_grpc_v1_shorten_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42,7 +42,7 @@ func (x *CreateRequest) String() string {
 func (*CreateRequest) ProtoMessage() {}
 
 func (x *CreateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_shorten_v1_shorten_proto_msgTypes[0]
+	mi := &file_grpc_v1_shorten_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55,7 +55,7 @@ func (x *CreateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRequest.ProtoReflect.Descriptor instead.
 func (*CreateRequest) Descriptor() ([]byte, []int) {
-	return file_shorten_v1_shorten_proto_rawDescGZIP(), []int{0}
+	return file_grpc_v1_shorten_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *CreateRequest) GetFullUrl() string {
@@ -74,7 +74,7 @@ type CreateResponse struct {
 
 func (x *CreateResponse) Reset() {
 	*x = CreateResponse{}
-	mi := &file_shorten_v1_shorten_proto_msgTypes[1]
+	mi := &file_grpc_v1_shorten_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -86,7 +86,7 @@ func (x *CreateResponse) String() string {
 func (*CreateResponse) ProtoMessage() {}
 
 func (x *CreateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_shorten_v1_shorten_proto_msgTypes[1]
+	mi := &file_grpc_v1_shorten_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -99,7 +99,7 @@ func (x *CreateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateResponse.ProtoReflect.Descriptor instead.
 func (*CreateResponse) Descriptor() ([]byte, []int) {
-	return file_shorten_v1_shorten_proto_rawDescGZIP(), []int{1}
+	return file_grpc_v1_shorten_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *CreateResponse) GetShortUrl() string {
@@ -109,28 +109,28 @@ func (x *CreateResponse) GetShortUrl() string {
 	return ""
 }
 
-type GetByCodeRequest struct {
+type GetRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ShortCode     string                 `protobuf:"bytes,1,opt,name=short_code,json=shortCode,proto3" json:"short_code,omitempty"`
+	ShortUrl      string                 `protobuf:"bytes,1,opt,name=short_url,json=shortUrl,proto3" json:"short_url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetByCodeRequest) Reset() {
-	*x = GetByCodeRequest{}
-	mi := &file_shorten_v1_shorten_proto_msgTypes[2]
+func (x *GetRequest) Reset() {
+	*x = GetRequest{}
+	mi := &file_grpc_v1_shorten_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetByCodeRequest) String() string {
+func (x *GetRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetByCodeRequest) ProtoMessage() {}
+func (*GetRequest) ProtoMessage() {}
 
-func (x *GetByCodeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_shorten_v1_shorten_proto_msgTypes[2]
+func (x *GetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_grpc_v1_shorten_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -141,40 +141,40 @@ func (x *GetByCodeRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetByCodeRequest.ProtoReflect.Descriptor instead.
-func (*GetByCodeRequest) Descriptor() ([]byte, []int) {
-	return file_shorten_v1_shorten_proto_rawDescGZIP(), []int{2}
+// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
+func (*GetRequest) Descriptor() ([]byte, []int) {
+	return file_grpc_v1_shorten_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *GetByCodeRequest) GetShortCode() string {
+func (x *GetRequest) GetShortUrl() string {
 	if x != nil {
-		return x.ShortCode
+		return x.ShortUrl
 	}
 	return ""
 }
 
-type GetByCodeResponse struct {
+type GetResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	FullUrl       string                 `protobuf:"bytes,1,opt,name=full_url,json=fullUrl,proto3" json:"full_url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetByCodeResponse) Reset() {
-	*x = GetByCodeResponse{}
-	mi := &file_shorten_v1_shorten_proto_msgTypes[3]
+func (x *GetResponse) Reset() {
+	*x = GetResponse{}
+	mi := &file_grpc_v1_shorten_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetByCodeResponse) String() string {
+func (x *GetResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetByCodeResponse) ProtoMessage() {}
+func (*GetResponse) ProtoMessage() {}
 
-func (x *GetByCodeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_shorten_v1_shorten_proto_msgTypes[3]
+func (x *GetResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_grpc_v1_shorten_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -185,61 +185,61 @@ func (x *GetByCodeResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetByCodeResponse.ProtoReflect.Descriptor instead.
-func (*GetByCodeResponse) Descriptor() ([]byte, []int) {
-	return file_shorten_v1_shorten_proto_rawDescGZIP(), []int{3}
+// Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
+func (*GetResponse) Descriptor() ([]byte, []int) {
+	return file_grpc_v1_shorten_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetByCodeResponse) GetFullUrl() string {
+func (x *GetResponse) GetFullUrl() string {
 	if x != nil {
 		return x.FullUrl
 	}
 	return ""
 }
 
-var File_shorten_v1_shorten_proto protoreflect.FileDescriptor
+var File_grpc_v1_shorten_proto protoreflect.FileDescriptor
 
-const file_shorten_v1_shorten_proto_rawDesc = "" +
+const file_grpc_v1_shorten_proto_rawDesc = "" +
 	"\n" +
-	"\x18shorten/v1/shorten.proto\x12\n" +
+	"\x15grpc/v1/shorten.proto\x12\n" +
 	"shorten.v1\"*\n" +
 	"\rCreateRequest\x12\x19\n" +
 	"\bfull_url\x18\x01 \x01(\tR\afullUrl\"-\n" +
 	"\x0eCreateResponse\x12\x1b\n" +
-	"\tshort_url\x18\x01 \x01(\tR\bshortUrl\"1\n" +
-	"\x10GetByCodeRequest\x12\x1d\n" +
+	"\tshort_url\x18\x01 \x01(\tR\bshortUrl\")\n" +
 	"\n" +
-	"short_code\x18\x01 \x01(\tR\tshortCode\".\n" +
-	"\x11GetByCodeResponse\x12\x19\n" +
-	"\bfull_url\x18\x01 \x01(\tR\afullUrl2\x9b\x01\n" +
+	"GetRequest\x12\x1b\n" +
+	"\tshort_url\x18\x01 \x01(\tR\bshortUrl\"(\n" +
+	"\vGetResponse\x12\x19\n" +
+	"\bfull_url\x18\x01 \x01(\tR\afullUrl2\x89\x01\n" +
 	"\x0eShortenService\x12?\n" +
-	"\x06Create\x12\x19.shorten.v1.CreateRequest\x1a\x1a.shorten.v1.CreateResponse\x12H\n" +
-	"\tGetByCode\x12\x1c.shorten.v1.GetByCodeRequest\x1a\x1d.shorten.v1.GetByCodeResponseB\x1dZ\x1bshorten/internal/grpc/pb;pbb\x06proto3"
+	"\x06Create\x12\x19.shorten.v1.CreateRequest\x1a\x1a.shorten.v1.CreateResponse\x126\n" +
+	"\x03Get\x12\x16.shorten.v1.GetRequest\x1a\x17.shorten.v1.GetResponseB\x1bZ\x19shorten/gen/grpc/v1/pb;pbb\x06proto3"
 
 var (
-	file_shorten_v1_shorten_proto_rawDescOnce sync.Once
-	file_shorten_v1_shorten_proto_rawDescData []byte
+	file_grpc_v1_shorten_proto_rawDescOnce sync.Once
+	file_grpc_v1_shorten_proto_rawDescData []byte
 )
 
-func file_shorten_v1_shorten_proto_rawDescGZIP() []byte {
-	file_shorten_v1_shorten_proto_rawDescOnce.Do(func() {
-		file_shorten_v1_shorten_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_shorten_v1_shorten_proto_rawDesc), len(file_shorten_v1_shorten_proto_rawDesc)))
+func file_grpc_v1_shorten_proto_rawDescGZIP() []byte {
+	file_grpc_v1_shorten_proto_rawDescOnce.Do(func() {
+		file_grpc_v1_shorten_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_grpc_v1_shorten_proto_rawDesc), len(file_grpc_v1_shorten_proto_rawDesc)))
 	})
-	return file_shorten_v1_shorten_proto_rawDescData
+	return file_grpc_v1_shorten_proto_rawDescData
 }
 
-var file_shorten_v1_shorten_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
-var file_shorten_v1_shorten_proto_goTypes = []any{
-	(*CreateRequest)(nil),     // 0: shorten.v1.CreateRequest
-	(*CreateResponse)(nil),    // 1: shorten.v1.CreateResponse
-	(*GetByCodeRequest)(nil),  // 2: shorten.v1.GetByCodeRequest
-	(*GetByCodeResponse)(nil), // 3: shorten.v1.GetByCodeResponse
+var file_grpc_v1_shorten_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_grpc_v1_shorten_proto_goTypes = []any{
+	(*CreateRequest)(nil),  // 0: shorten.v1.CreateRequest
+	(*CreateResponse)(nil), // 1: shorten.v1.CreateResponse
+	(*GetRequest)(nil),     // 2: shorten.v1.GetRequest
+	(*GetResponse)(nil),    // 3: shorten.v1.GetResponse
 }
-var file_shorten_v1_shorten_proto_depIdxs = []int32{
+var file_grpc_v1_shorten_proto_depIdxs = []int32{
 	0, // 0: shorten.v1.ShortenService.Create:input_type -> shorten.v1.CreateRequest
-	2, // 1: shorten.v1.ShortenService.GetByCode:input_type -> shorten.v1.GetByCodeRequest
+	2, // 1: shorten.v1.ShortenService.Get:input_type -> shorten.v1.GetRequest
 	1, // 2: shorten.v1.ShortenService.Create:output_type -> shorten.v1.CreateResponse
-	3, // 3: shorten.v1.ShortenService.GetByCode:output_type -> shorten.v1.GetByCodeResponse
+	3, // 3: shorten.v1.ShortenService.Get:output_type -> shorten.v1.GetResponse
 	2, // [2:4] is the sub-list for method output_type
 	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -247,26 +247,26 @@ var file_shorten_v1_shorten_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_shorten_v1_shorten_proto_init() }
-func file_shorten_v1_shorten_proto_init() {
-	if File_shorten_v1_shorten_proto != nil {
+func init() { file_grpc_v1_shorten_proto_init() }
+func file_grpc_v1_shorten_proto_init() {
+	if File_grpc_v1_shorten_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_shorten_v1_shorten_proto_rawDesc), len(file_shorten_v1_shorten_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_grpc_v1_shorten_proto_rawDesc), len(file_grpc_v1_shorten_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_shorten_v1_shorten_proto_goTypes,
-		DependencyIndexes: file_shorten_v1_shorten_proto_depIdxs,
-		MessageInfos:      file_shorten_v1_shorten_proto_msgTypes,
+		GoTypes:           file_grpc_v1_shorten_proto_goTypes,
+		DependencyIndexes: file_grpc_v1_shorten_proto_depIdxs,
+		MessageInfos:      file_grpc_v1_shorten_proto_msgTypes,
 	}.Build()
-	File_shorten_v1_shorten_proto = out.File
-	file_shorten_v1_shorten_proto_goTypes = nil
-	file_shorten_v1_shorten_proto_depIdxs = nil
+	File_grpc_v1_shorten_proto = out.File
+	file_grpc_v1_shorten_proto_goTypes = nil
+	file_grpc_v1_shorten_proto_depIdxs = nil
 }

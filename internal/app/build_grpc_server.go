@@ -3,7 +3,7 @@ package app
 import (
 	"net"
 
-	pb "shorten/gen/shorten/v1"
+	pb "shorten/gen/grpc/v1"
 	"shorten/internal/config"
 	grpcHandler "shorten/internal/transport/link/grpc"
 

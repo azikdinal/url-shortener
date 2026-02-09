@@ -28,7 +28,6 @@ func TestInmemoryStorage_GetFullURL(t *testing.T) {
 		{
 			name: "id not found",
 			setup: func(s *InmemoryStorage) {
-				// ничего не кладем
 			},
 			id:        42,
 			wantURL:   "",

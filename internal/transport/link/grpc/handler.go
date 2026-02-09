@@ -2,7 +2,7 @@ package grpc
 
 import (
 	"context"
-	pb "shorten/gen/shorten/v1"
+	pb "shorten/gen/grpc/v1"
 )
 
 type LinkUseCase interface {
