@@ -27,14 +27,5 @@ services:
     # - "5432:5432"
     networks:
       - default
-
-  # Миграции
-  migrate:
-    image: migrate/migrate:v4
-    command: -path=/migrations -database "${PG_HOST}://${PG_USER}:${PG_PASSWORD}@${PG_HOST}:${PG_PORT}/${PG_DBNAME}?sslmode=${DB_SSL_MODE}" up
     volumes:
-      - ./migrations:/migrations
-    depends_on:
-      - postgres
-    networks:
-      - default
+      - ./migrations:/docker-entrypoint-initdb.d
