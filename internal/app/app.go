@@ -12,6 +12,7 @@ import (
 	linkUseCase "shorten/internal/usecase/link"
 
 	"github.com/jackc/pgx/v4/pgxpool"
+	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
 )
 
