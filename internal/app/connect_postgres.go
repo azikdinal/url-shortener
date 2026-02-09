@@ -6,6 +6,7 @@ import (
 	"shorten/internal/config"
 
 	"github.com/jackc/pgx/v4/pgxpool"
+	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
 func connectPostgres(ctx context.Context, cfg *config.Config) (*pgxpool.Pool, error) {

@@ -1,0 +1,1 @@
+CREATE TABLE public.links (id BIGSERIAL PRIMARY KEY, full_url TEXT NOT NULL);

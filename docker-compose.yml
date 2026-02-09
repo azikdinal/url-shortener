@@ -6,13 +6,16 @@ services:
     hostname: shortener
     restart: unless-stopped
     env_file: .env
+    environment:
+      PG_HOST: 172.25.0.4
     ports:
       - "8000:8000" # HTTP server
       - "8001:8001" # GRPC server
     depends_on:
       - postgres
     networks:
-      - default
+      default:
+        ipv4_address: 172.25.0.3
 
   postgres:
     image: postgres:18-alpine
@@ -23,9 +26,18 @@ services:
       - POSTGRES_USER=${PG_USER}
       - POSTGRES_PASSWORD=${PG_PASSWORD}
       - POSTGRES_DB=${PG_DBNAME}
-    # ports:
-    # - "5432:5432"
+    ports:
+      - "5432:5432"
     networks:
-      - default
+      default:
+        ipv4_address: 172.25.0.4
     volumes:
-      - ./migrations:/docker-entrypoint-initdb.d
+      - ./db_init:/docker-entrypoint-initdb.d:ro
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/16
